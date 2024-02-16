@@ -1,7 +1,7 @@
-function getNombre(){
+const getNombre = () =>{
     return 'nicolas';
 }
-function getApellido(){
+const getApellido = () => {
     return 'citro';
 }
 function getNombreCompleto(){
