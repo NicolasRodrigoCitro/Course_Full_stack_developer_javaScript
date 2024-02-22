@@ -1,25 +1,36 @@
-
 const fabricaDePromesas = indice =>
-    new Promise((resolve, reject) => {
-    
-    const timeResolve= Math.floor(Math.random() * 10000)+ 1000;
-    const timeReject= Math.floor(Math.random() * 10000)+ 1000;
+  new Promise((resolve, reject) => {
+    const tiempoRejected = Math.floor(Math.random() * 10000) + 1000;
+    const tiempoResolved = Math.floor(Math.random() * 10000) + 1000;
+    /* setTimeout(() => {
+      reject(`la promesa ${indice} falló`);
+    }, tiempoRejected); */
 
-    setTimeout( ()=>{
-        resolve(`La promesa ${indice} se cumplió`);//resolver
-    },timeResolve)
-    
-    setTimeout( ()=>{
-        reject(`La promesa ${indice} falló`)//rechazar
-    },timeReject)    
-});
- 
+    setTimeout(() => {
+      resolve(`promesa ${indice} satisfecha`);
+    }, tiempoResolved);
+  });
 
-let miPromesas = [];
-for (let i=0; i<10; i++){
-    miPromesas=[...miPromesas, fabricaDePromesas(i)];
+/*
+Promise.race(misPromesas)
+  .then(respuesta => console.log(respuesta))
+  .catch(razon => console.log(razon)); */
+
+async function miAsyncFunction() {
+  try {
+    let misPromesas = [];
+    for (let i = 0; i < 10; i++) {
+      misPromesas = [...misPromesas, await fabricaDePromesas(i)];
+    }
+    console.log(
+      "variable misPromesas al interior de la async function",
+      misPromesas
+    );
+    return misPromesas;
+  } catch (error) {
+    throw error;
+  }
 }
-//unPromensa.then( respuesta => console.log(respuesta), razon => console.log(razon))
-Promise.race(miPromesas)
-    .then(resupuesta => console.log(resupuesta))
-    .catch(razon => console.log(razon))
+function miFunctionNormal() {
+  return fabricaDePromesas(2);
+}
